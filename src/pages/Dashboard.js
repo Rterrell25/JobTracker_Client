@@ -102,7 +102,7 @@ const Alumni = ({ match, history }) => {
   }
 
   return (
-    <Container maxwidth="md" className={classes.dashboardContainer}>
+    <Container className={classes.dashboardContainer}>
       {!isSmallScreen ? (
         <NewJobForm
           handleSubmit={handleSubmit}

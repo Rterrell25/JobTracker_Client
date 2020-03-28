@@ -5,10 +5,10 @@ import useJobCardStyles from '../styles/JobCardStyles'
 import AlumniJobCard from '../components/AlumniJobCard'
 
 // Material UI Stuff
-
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import LanguageIcon from '@material-ui/icons/Language'
 import Chip from '@material-ui/core/Chip'
+import Container from '@material-ui/core/Container'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import Link from '@material-ui/core/Link'
 import Card from '@material-ui/core/Card'
@@ -49,7 +49,7 @@ const Alumni = ({ location }) => {
   }, [location.state.id])
 
   return (
-    <div style={{ marginTop: 70 }}>
+    <Container className={classes.dashboardContainer}>
       <>
         {user ? (
           <div>
@@ -153,7 +153,7 @@ const Alumni = ({ location }) => {
           <CircularProgress size={60} className={classes.progressThree} />
         )}
       </>
-    </div>
+    </Container>
   )
 }
 
