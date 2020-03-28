@@ -16,6 +16,7 @@ import reducer from './utils/reducer'
 import themeFile from './utils/theme'
 import AuthRoute from './utils/AuthRoute'
 import UnAuthRoute from './utils/UnAuthRoute'
+import AdminRoute from './utils/AdminRoute'
 
 // Components
 import NavBar from './components/NavBar'
@@ -103,15 +104,11 @@ const App = () => {
                   component={Dashboard}
                   isAuth={state.isAuth}
                 />
-                <AuthRoute
+                <AdminRoute
                   path="/admin"
-                  render={() => {
-                    return !user.user.admin ? (
-                      <Redirect to="/" />
-                    ) : (
-                      <Admin isAuth={state.isAuth} />
-                    )
-                  }}
+                  component={Admin}
+                  isAuth={state.isAuth}
+                  user={user}
                 />
                 <AuthRoute
                   path="/users/:id"
