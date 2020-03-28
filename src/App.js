@@ -1,10 +1,5 @@
 import React, { useEffect, useContext, useReducer } from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles/'
 import UserContext from './contexts/UserContext'

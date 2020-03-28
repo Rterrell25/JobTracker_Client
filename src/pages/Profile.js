@@ -344,7 +344,7 @@ const Profile = () => {
                   anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                   style={{ top: 70 }}
                   open={open}
-                  // autoHideDuration={4000}
+                  autoHideDuration={4000}
                   onClose={handleClose}
                 >
                   {message.message ? (
