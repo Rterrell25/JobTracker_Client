@@ -42,7 +42,7 @@ const fetchProfile = token => {
 
 const App = () => {
   const initialState = useContext(UserContext)
-  const [user, setUser] = useContext(ProfileContext)
+  const { user, setUser } = useContext(ProfileContext)
   const [state, dispatch] = useReducer(reducer, initialState)
 
   // keeps userContext authorized if signed in

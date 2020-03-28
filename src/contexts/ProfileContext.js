@@ -6,7 +6,7 @@ export const ProfileProvider = props => {
   const [user, setUser] = useState(null)
 
   return (
-    <ProfileContext.Provider value={[user, setUser]}>
+    <ProfileContext.Provider value={{ user, setUser }}>
       {props.children}
     </ProfileContext.Provider>
   )

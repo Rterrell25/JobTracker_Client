@@ -1,14 +1,16 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+
 // Material UI
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
-import User from './User'
+
 // context
 import { ProfileContext } from '../contexts/ProfileContext'
+
 const Header = ({ isAuth, logout }) => {
-  const [user, setUser] = useContext(ProfileContext)
+  const { user } = useContext(ProfileContext)
   return (
     <Container maxWidth="lg" style={{ padding: 10 }}>
       <Grid container justify="space-between">

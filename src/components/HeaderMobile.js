@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 }))
 const HeaderMobile = ({ isAuth, logout }) => {
   const classes = useStyles()
-  const [user, setUser] = useContext(ProfileContext)
+  const { user } = useContext(ProfileContext)
   const [isOpen, setIsOpen] = useState(false)
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
   const toggleDrawer = event => {

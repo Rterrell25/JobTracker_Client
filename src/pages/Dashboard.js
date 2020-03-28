@@ -35,7 +35,7 @@ const Alumni = ({ match, history }) => {
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [isloading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState({})
-  const [user, setUser] = useContext(ProfileContext)
+  const { user, setUser } = useContext(ProfileContext)
   const [message, setMessage] = useState({})
   const [open, setOpen] = React.useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)

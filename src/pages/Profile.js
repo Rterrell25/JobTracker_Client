@@ -32,7 +32,7 @@ const Profile = () => {
   const [isloading, setIsLoading] = useState(false)
   const [isDetailLoading, setIsDetailLoading] = useState(false)
   const [errors, setErrors] = useState({})
-  const [user, setUser] = useContext(ProfileContext)
+  const { user, setUser } = useContext(ProfileContext)
   const [message, setMessage] = useState({})
   const [open, setOpen] = React.useState(false)
   const INITIAL_STATE = {
