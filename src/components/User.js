@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     }
   },
   content: {
-    width: '100%'
+    flexGrow: 1
   }
 })
 
