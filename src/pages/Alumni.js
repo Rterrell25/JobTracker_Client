@@ -5,10 +5,10 @@ import useJobCardStyles from '../styles/JobCardStyles'
 import AlumniJobCard from '../components/AlumniJobCard'
 
 // Material UI Stuff
-
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import LanguageIcon from '@material-ui/icons/Language'
 import Chip from '@material-ui/core/Chip'
+import Container from '@material-ui/core/Container'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import Link from '@material-ui/core/Link'
 import Card from '@material-ui/core/Card'
@@ -19,15 +19,18 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 
+const fetchUser = id => {
+  return axios.get(`/user/${id}`)
+}
+
 const Alumni = ({ location }) => {
   const classes = useJobCardStyles()
   const [user, setUser] = useState(null)
   const [job, setJob] = useState([])
 
-  const fetchUser = () => {
+  useEffect(() => {
     const id = location.state.id
-    axios
-      .get(`/user/${id}`)
+    fetchUser(id)
       .then(res => {
         setUser(res.data)
         const Jobs = res.data.jobs.map(
@@ -42,15 +45,11 @@ const Alumni = ({ location }) => {
         )
         setJob(Jobs)
       })
-      .catch(err => console.log('You fucked up'))
-  }
-
-  useEffect(() => {
-    fetchUser()
-  }, [])
+      .catch(err => console.log(err))
+  }, [location.state.id])
 
   return (
-    <div style={{ marginTop: 70 }}>
+    <Container className={classes.dashboardContainer}>
       <>
         {user ? (
           <div>
@@ -154,7 +153,7 @@ const Alumni = ({ location }) => {
           <CircularProgress size={60} className={classes.progressThree} />
         )}
       </>
-    </div>
+    </Container>
   )
 }
 

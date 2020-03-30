@@ -11,6 +11,7 @@ import reducer from './utils/reducer'
 import themeFile from './utils/theme'
 import AuthRoute from './utils/AuthRoute'
 import UnAuthRoute from './utils/UnAuthRoute'
+import AdminRoute from './utils/AdminRoute'
 
 // Components
 import NavBar from './components/NavBar'
@@ -29,26 +30,21 @@ import { ProfileContext } from './contexts/ProfileContext'
 
 const theme = createMuiTheme(themeFile)
 
-axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
+// axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
+
+const fetchProfile = token => {
+  return axios.get(`/user`, {
+    headers: {
+      Authorization: `${token}`
+    }
+  })
+}
 
 const App = () => {
   const initialState = useContext(UserContext)
-  const [user, setUser] = useContext(ProfileContext)
+  const { user, setUser } = useContext(ProfileContext)
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const fetchProfile = async token => {
-    await axios
-      .get(`/user`, {
-        headers: {
-          Authorization: `${token}`
-        }
-      })
-      .then(res => {
-        setUser(res.data)
-        console.log(res.data)
-      })
-      .catch(err => console.log({ err, user }))
-  }
   // keeps userContext authorized if signed in
   useEffect(
     _ => {
@@ -60,14 +56,18 @@ const App = () => {
           dispatch({ type: 'LOGOUT' })
         } else {
           dispatch({ type: 'LOGIN' })
-          state.isAuth && fetchProfile(token)
+          if (state.isAuth) {
+            fetchProfile(token)
+              .then(res => setUser(res.data))
+              .catch(error => console.error(error))
+          }
         }
       } else {
         dispatch({ type: 'LOGOUT' })
         localStorage.removeItem('FBIdToken')
       }
     },
-    [state.isAuth]
+    [state.isAuth, setUser]
   )
 
   return (
@@ -99,7 +99,12 @@ const App = () => {
                   component={Dashboard}
                   isAuth={state.isAuth}
                 />
-                <Route path="/admin" component={Admin} isAuth={state.isAuth} />
+                <AdminRoute
+                  path="/admin"
+                  component={Admin}
+                  isAuth={state.isAuth}
+                  user={user}
+                />
                 <AuthRoute
                   path="/users/:id"
                   component={Alumni}

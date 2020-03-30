@@ -10,6 +10,8 @@ import Alert from '../components/Alert'
 
 // Material UI Stuff
 import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Container from '@material-ui/core/Container'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Modal from '@material-ui/core/Modal'
@@ -35,7 +37,7 @@ const Alumni = ({ match, history }) => {
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [isloading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState({})
-  const [user, setUser] = useContext(ProfileContext)
+  const { user, setUser } = useContext(ProfileContext)
   const [message, setMessage] = useState({})
   const [open, setOpen] = React.useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -67,9 +69,8 @@ const Alumni = ({ match, history }) => {
       })
       .then(res => {
         setUser(res.data)
-        console.log(res.data)
       })
-      .catch(err => console.log('You fucked up'))
+      .catch(err => console.log(err))
   }
 
   const handleSubmit = async e => {
@@ -103,7 +104,7 @@ const Alumni = ({ match, history }) => {
   }
 
   return (
-    <Container maxwidth="md" className={classes.dashboardContainer}>
+    <Container className={classes.dashboardContainer}>
       {!isSmallScreen ? (
         <NewJobForm
           handleSubmit={handleSubmit}
@@ -145,7 +146,7 @@ const Alumni = ({ match, history }) => {
           </Modal>
         </>
       )}
-      {user ? (
+      {user && user.jobs.length > 0 ? (
         user.jobs.map((job, index) => (
           <JobCard
             key={job.jobId}
@@ -170,10 +171,14 @@ const Alumni = ({ match, history }) => {
             history={history}
           />
         ))
-      ) : (
+      ) : user && user.jobs.length === 0 ? (
         <Typography variant="h5" style={{ textAlign: 'center', marginTop: 50 }}>
           No User Job Postings
         </Typography>
+      ) : (
+        <Grid item container justify="center">
+          <CircularProgress size={50} />
+        </Grid>
       )}
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

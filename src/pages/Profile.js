@@ -32,7 +32,7 @@ const Profile = () => {
   const [isloading, setIsLoading] = useState(false)
   const [isDetailLoading, setIsDetailLoading] = useState(false)
   const [errors, setErrors] = useState({})
-  const [user, setUser] = useContext(ProfileContext)
+  const { user, setUser } = useContext(ProfileContext)
   const [message, setMessage] = useState({})
   const [open, setOpen] = React.useState(false)
   const INITIAL_STATE = {
@@ -64,7 +64,6 @@ const Profile = () => {
       })
       .then(res => {
         setUser(res.data)
-        console.log(res.data)
         setFormData({
           ...formData,
           github: res.data.user.github ? res.data.user.github : '',
@@ -74,7 +73,7 @@ const Profile = () => {
           program: res.data.user.program
         })
       })
-      .catch(err => console.log('You fucked up'))
+      .catch(err => console.log(err))
   }
   const handleSubmit = async e => {
     e.preventDefault()
@@ -345,7 +344,7 @@ const Profile = () => {
                   anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                   style={{ top: 70 }}
                   open={open}
-                  // autoHideDuration={4000}
+                  autoHideDuration={4000}
                   onClose={handleClose}
                 >
                   {message.message ? (
