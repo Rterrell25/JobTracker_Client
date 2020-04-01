@@ -24,13 +24,14 @@ import SignUp from './pages/SignUp'
 import Admin from './pages/Admin'
 import Dashboard from './pages/Dashboard'
 import Alumni from './pages/Alumni'
+import Reset from './pages/Reset'
 
 // context
 import { ProfileContext } from './contexts/ProfileContext'
 
 const theme = createMuiTheme(themeFile)
 
-axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
+// axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
 
 const fetchProfile = token => {
   return axios.get(`/user`, {
@@ -87,6 +88,11 @@ const App = () => {
                 <UnAuthRoute
                   path="/login"
                   component={Login}
+                  isAuth={state.isAuth}
+                />
+                <UnAuthRoute
+                  path="/reset"
+                  component={Reset}
                   isAuth={state.isAuth}
                 />
                 <AuthRoute
