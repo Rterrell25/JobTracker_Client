@@ -30,6 +30,7 @@ const inputProps = {
 }
 const Profile = () => {
   const [isloading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [isDetailLoading, setIsDetailLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const { user, setUser } = useContext(ProfileContext)
@@ -131,6 +132,7 @@ const Profile = () => {
   const handleFileChange = async event => {
     setMessage('')
     setErrors('')
+    setLoading(true)
     const file = event.target.files[0]
     if (!file) return
     const fileData = new FormData()
@@ -146,10 +148,11 @@ const Profile = () => {
         setOpen(true)
         setMessage(res.data)
         fetchProfile()
+        setLoading(false)
       })
       .catch(err => {
         setOpen(true)
-        setIsLoading(false)
+        setLoading(false)
         setErrors(err.response.data)
         console.log(err)
       })
@@ -263,11 +266,16 @@ const Profile = () => {
               >
                 Welcome, {user.user.firstName}
               </Typography>
-              {user.user.resumeUrl && (
-                <Link href={user.user.resumeUrl} target="blank">
-                  <Chip label="View Resume" clickable />
-                </Link>
+              {loading ? (
+                <CircularProgress size={30} />
+              ) : (
+                user.user.resumeUrl && (
+                  <Link href={user.user.resumeUrl} target="blank">
+                    <Chip label="View Resume" clickable />
+                  </Link>
+                )
               )}
+
               <form noValidate onSubmit={handleSubmit} className={classes.form}>
                 <TextField
                   variant="outlined"

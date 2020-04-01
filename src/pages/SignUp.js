@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    position: 'relative'
+    position: 'relative',
+    marginBottom: '25px'
   },
   image: {
     margin: '20px auto 20px auto',
@@ -221,7 +222,7 @@ const SignUp = ({ history }) => {
               disabled={isInvalid}
               disableElevation
             >
-              Login
+              Sign Up
               {isloading && (
                 <CircularProgress size={30} className={classes.progress} />
               )}
