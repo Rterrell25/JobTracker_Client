@@ -227,7 +227,12 @@ const SignUp = ({ history }) => {
                 <CircularProgress size={30} className={classes.progress} />
               )}
             </Button>
-            <Link component={NavLink} to="/login">
+            <Link
+              component={NavLink}
+              to="/login"
+              variant="body2"
+              style={{ color: 'black' }}
+            >
               Already have an account? Login
             </Link>
           </form>

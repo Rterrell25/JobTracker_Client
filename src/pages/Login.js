@@ -146,11 +146,21 @@ const Login = ({ history }) => {
               )}
             </Button>
             <div>
-              <Link component={NavLink} to="/signup" variant="body2">
+              <Link
+                component={NavLink}
+                to="/signup"
+                variant="body2"
+                style={{ color: 'black' }}
+              >
                 Don't have an account? Sign Up
               </Link>
               <br />
-              <Link component={NavLink} to="/reset" variant="body2">
+              <Link
+                component={NavLink}
+                to="/reset"
+                variant="body2"
+                style={{ color: 'black' }}
+              >
                 Forgot Password?
               </Link>
             </div>

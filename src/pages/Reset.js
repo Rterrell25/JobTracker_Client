@@ -177,7 +177,12 @@ const Reset = () => {
                 <div></div>
               )}
             </Snackbar>
-            <Link component={NavLink} to="/login" variant="body2">
+            <Link
+              component={NavLink}
+              to="/login"
+              variant="body2"
+              style={{ color: 'black' }}
+            >
               Back to Login
             </Link>
           </form>
