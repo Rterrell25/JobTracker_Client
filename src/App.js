@@ -31,7 +31,7 @@ import { ProfileContext } from './contexts/ProfileContext'
 
 const theme = createMuiTheme(themeFile)
 
-axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
+// axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
 
 const fetchProfile = token => {
   return axios.get(`/user`, {
