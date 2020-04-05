@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
-import Box from '@material-ui/core/Box'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -23,12 +22,18 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import Avatar from '@material-ui/core/Avatar'
 import ThinLogo from './SVGComponents/ThinLogo'
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount'
+import DarkModeIcon from '@material-ui/icons/Brightness4'
+import LightModeIcon from '@material-ui/icons/Brightness7'
+
 // context
 import { ProfileContext } from '../contexts/ProfileContext'
+import { ThemeContext } from '../contexts/ThemeContext'
+
 const useStyles = makeStyles(theme => ({
   navList: {
     width: 280,
-    height: '100%'
+    flexGrow: 1,
+    position: 'relative'
   },
   fullList: {
     width: 'auto'
@@ -38,10 +43,7 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     borderRadius: 0,
     boxShadow: 'none',
-    textTransform: 'uppercase',
-    '&:hover': {
-      backgroundColor: 'red'
-    }
+    textTransform: 'uppercase'
   },
   spreadLogout: {
     display: 'flex',
@@ -56,6 +58,7 @@ const useStyles = makeStyles(theme => ({
 const HeaderMobile = ({ isAuth, logout }) => {
   const classes = useStyles()
   const { user } = useContext(ProfileContext)
+  const { isDarkTheme, setIsDarkTheme } = useContext(ThemeContext)
   const [isOpen, setIsOpen] = useState(false)
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
   const toggleDrawer = event => {
@@ -68,6 +71,12 @@ const HeaderMobile = ({ isAuth, logout }) => {
     }
     setIsOpen(!isOpen)
   }
+
+  const handleThemeChange = () => {
+    localStorage.setItem('prefersDarkTheme', `${!isDarkTheme}`)
+    setIsDarkTheme(prevState => !prevState)
+  }
+
   return (
     <>
       <Grid container justify="space-between" alignItems="center">
@@ -101,53 +110,59 @@ const HeaderMobile = ({ isAuth, logout }) => {
           onClick={toggleDrawer}
           onKeyDown={toggleDrawer}
         >
+          <ListItem button component={Link} to="/">
+            <ThinLogo svgHeight={70} />
+          </ListItem>
+          <Divider />
           {isAuth ? (
-            <Box className={classes.spreadLogout}>
-              <Box>
-                <ListItem button component={Link} to="/">
-                  <ThinLogo svgHeight={70} />
-                </ListItem>
-                <Divider />
-                {user && (
-                  <ListItem button component={Link} to="/profile">
-                    <ListItemIcon>
-                      <Avatar
-                        alt={user.user.firstName + user.user.lastName}
-                        src={user.user.imageUrl}
-                      />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography variant="body1">
-                        {user.user.firstName} {user.user.lastName}
-                      </Typography>
-                      <Typography variant="body2">{user.user.email}</Typography>
-                    </ListItemText>
-                  </ListItem>
-                )}
-                <Divider />
+            <>
+              {user && (
                 <ListItem button component={Link} to="/profile">
                   <ListItemIcon>
-                    <AccountCircleIcon />
+                    <Avatar
+                      alt={user.user.firstName + user.user.lastName}
+                      src={user.user.imageUrl}
+                    />
                   </ListItemIcon>
-                  <ListItemText primary="Profile" />
+                  <ListItemText>
+                    <Typography variant="body1">
+                      {user.user.firstName} {user.user.lastName}
+                    </Typography>
+                    <Typography variant="body2">{user.user.email}</Typography>
+                  </ListItemText>
                 </ListItem>
-                <ListItem button component={Link} to="/dashboard">
+              )}
+              <Divider />
+              <ListItem button component={Link} to="/profile">
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard">
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+              {user && user.user.admin && (
+                <ListItem button component={Link} to="/admin">
                   <ListItemIcon>
-                    <DashboardIcon />
+                    <SupervisorAccountIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Dashboard" />
+                  <ListItemText primary="Admin" />
                 </ListItem>
-                {user && user.user.admin && (
-                  <ListItem button component={Link} to="/admin">
-                    <ListItemIcon>
-                      <SupervisorAccountIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Admin" />
-                  </ListItem>
-                )}
-                <Divider />
-              </Box>
-              <ListItem>
+              )}
+              <Divider />
+              <ListItem onClick={handleThemeChange}>
+                <ListItemIcon>
+                  {isDarkTheme ? <LightModeIcon /> : <DarkModeIcon />}
+                </ListItemIcon>
+                <ListItemText
+                  primary={isDarkTheme ? 'Set Light' : 'Set Dark'}
+                />
+              </ListItem>
+              <ListItem style={{ bottom: 0, position: 'absolute' }}>
                 <Button
                   variant="contained"
                   color="secondary"
@@ -159,7 +174,7 @@ const HeaderMobile = ({ isAuth, logout }) => {
                   <ExitToAppIcon />
                 </Button>
               </ListItem>
-            </Box>
+            </>
           ) : (
             <>
               <ListItem button component={Link} to="/login">
@@ -173,6 +188,15 @@ const HeaderMobile = ({ isAuth, logout }) => {
                   <PersonAddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Sign Up" />
+              </ListItem>
+              <Divider />
+              <ListItem onClick={handleThemeChange}>
+                <ListItemIcon>
+                  {isDarkTheme ? <LightModeIcon /> : <DarkModeIcon />}
+                </ListItemIcon>
+                <ListItemText
+                  primary={isDarkTheme ? 'Set Light' : 'Set Dark'}
+                />
               </ListItem>
             </>
           )}

@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 // Pages
 import User from '../components/User'
@@ -103,7 +104,9 @@ const Admin = () => {
         </Grid>
         <Grid item sm={8} xs={12}>
           {!users ? (
-            <h1>Loading...</h1>
+            <Grid item container justify="center">
+              <CircularProgress size={50} />
+            </Grid>
           ) : (
             users
               .filter(user => {

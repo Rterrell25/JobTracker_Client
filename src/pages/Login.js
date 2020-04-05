@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: '0.8rem',
     width: '100%',
     position: 'absolute'
+  },
+  links: {
+    color: theme.palette.text.primary
   }
 }))
 
@@ -150,7 +153,7 @@ const Login = ({ history }) => {
                 component={NavLink}
                 to="/signup"
                 variant="body2"
-                style={{ color: 'black' }}
+                className={classes.links}
               >
                 Don't have an account? Sign Up
               </Link>
@@ -159,7 +162,7 @@ const Login = ({ history }) => {
                 component={NavLink}
                 to="/reset"
                 variant="body2"
-                style={{ color: 'black' }}
+                className={classes.links}
               >
                 Forgot Password?
               </Link>

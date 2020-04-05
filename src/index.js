@@ -4,10 +4,13 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 import { ProfileProvider } from './contexts/ProfileContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 ReactDOM.render(
   <ProfileProvider>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </ProfileProvider>,
   document.getElementById('root')
 )

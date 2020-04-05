@@ -55,6 +55,9 @@ const useStyles = makeStyles(theme => ({
   },
   pageTitle: {
     marginBottom: 16
+  },
+  links: {
+    color: theme.palette.text.primary
   }
 }))
 
@@ -231,7 +234,7 @@ const SignUp = ({ history }) => {
               component={NavLink}
               to="/login"
               variant="body2"
-              style={{ color: 'black' }}
+              className={classes.links}
             >
               Already have an account? Login
             </Link>

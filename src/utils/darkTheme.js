@@ -4,14 +4,18 @@ const Raleway = {
   fontFamily: 'Raleway, sans-serif'
 }
 
-const BLACK = '#000000'
-const DARK_GREY = '#373733'
 const theme = createMuiTheme({
   palette: {
-    text: {
-      primary: BLACK,
-      secondary: DARK_GREY
+    // COMMENTS LEFT IN TO SHOW HOW TO EDIT THEME COLORS
+    type: 'dark',
+    background: {
+      paper: '#15202B',
+      default: '#11171F'
     },
+    // text: {
+    //   primary: BLACK,
+    //   secondary: DARK_GREY
+    // },
     primary: {
       // light: will be calculated from palette.primary.main,
       main: '#60C1E5'

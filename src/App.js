@@ -1,14 +1,18 @@
 import React, { useEffect, useContext, useReducer } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles/'
 import UserContext from './contexts/UserContext'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
 
+// MUI stuff
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles/'
+import CssBaseline from '@material-ui/core/CssBaseline'
+
 // utils
 import reducer from './utils/reducer'
-import themeFile from './utils/theme'
+import lightTheme from './utils/lightTheme'
+import darkTheme from './utils/darkTheme'
 import AuthRoute from './utils/AuthRoute'
 import UnAuthRoute from './utils/UnAuthRoute'
 import AdminRoute from './utils/AdminRoute'
@@ -28,8 +32,7 @@ import Reset from './pages/Reset'
 
 // context
 import { ProfileContext } from './contexts/ProfileContext'
-
-const theme = createMuiTheme(themeFile)
+import { ThemeContext } from './contexts/ThemeContext'
 
 axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
 
@@ -44,7 +47,9 @@ const fetchProfile = token => {
 const App = () => {
   const initialState = useContext(UserContext)
   const { user, setUser } = useContext(ProfileContext)
+  const { isDarkTheme } = useContext(ThemeContext)
   const [state, dispatch] = useReducer(reducer, initialState)
+  const theme = createMuiTheme(isDarkTheme ? darkTheme : lightTheme)
 
   // keeps userContext authorized if signed in
   useEffect(
@@ -73,6 +78,7 @@ const App = () => {
 
   return (
     <MuiThemeProvider theme={theme}>
+      <CssBaseline />
       <UserContext.Provider value={{ state, dispatch }}>
         <div className="App">
           <Router>

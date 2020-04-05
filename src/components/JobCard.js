@@ -218,9 +218,7 @@ const JobCard = ({
                   </Grid>
                   <Grid item sm={2} xs={12}>
                     <Typography variant="body2" className={classes.timeStamp}>
-                      {moment(createdAt)
-                        .startOf('minute')
-                        .fromNow()}
+                      {moment(createdAt).startOf('minute').fromNow()}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -293,7 +291,6 @@ const JobCard = ({
           >
             Follow Ups with {company}
           </Typography>
-
           {follows !== null && !isFollowloading && follows.length > 0 ? (
             follows.map(item => (
               <Card
@@ -313,9 +310,7 @@ const JobCard = ({
                     </Grid>
                     <Grid item sm={3} xs={12} className={classes.grid}>
                       <Typography variant="body2" className={classes.timeStamp}>
-                        {moment(item.createdAt)
-                          .startOf('minute')
-                          .fromNow()}
+                        {moment(item.createdAt).startOf('minute').fromNow()}
                       </Typography>
                     </Grid>
                   </Grid>
