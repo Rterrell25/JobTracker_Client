@@ -83,7 +83,6 @@ const Alumni = ({ match, history }) => {
           Authorization: `${fireToken}`
         }
       })
-
       .then(res => {
         setOpen(true)
         setMessage(res.data)

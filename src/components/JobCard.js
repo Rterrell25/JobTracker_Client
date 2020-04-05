@@ -12,6 +12,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -47,6 +48,7 @@ const JobCard = ({
   const [edit, setEdit] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [isloading, setIsLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
   const [isFollowloading, setIsFollowLoading] = useState(false)
   const [jobData, setJobData] = useState({
     company,
@@ -84,7 +86,6 @@ const JobCard = ({
 
   const handleEditJob = async e => {
     e.preventDefault()
-
     setIsLoading(true)
     const fireToken = await localStorage.FBIdToken
     await axios
@@ -93,7 +94,6 @@ const JobCard = ({
           Authorization: `${fireToken}`
         }
       })
-
       .then(res => {
         setMessage(res.data)
         fetchUser()
@@ -108,6 +108,7 @@ const JobCard = ({
   }
 
   const deleteJob = async () => {
+    setDeleteLoading(true)
     const fireToken = await localStorage.FBIdToken
     await axios
       .delete(`/job/${id}`, {
@@ -116,11 +117,15 @@ const JobCard = ({
         }
       })
       .then(res => {
+        setDeleteLoading(false)
         setMessage(res.data)
         setOpen(true)
         fetchUser()
       })
       .catch(err => {
+        setDeleteLoading(false)
+        setMessage('Something went wrong.')
+        setOpen(true)
         console.log(err)
       })
   }
@@ -187,18 +192,27 @@ const JobCard = ({
               >
                 <Grid container alignItems="center" spacing={2}>
                   <Grid item sm={2} xs={12} style={{ display: 'flex' }}>
-                    <button onClick={handleEditMode} className={classes.button}>
+                    <IconButton
+                      onClick={handleEditMode}
+                      className={classes.button}
+                    >
                       <EditIcon />
-                    </button>
-                    <button onClick={deleteJob} className={classes.button}>
+                    </IconButton>
+                    <IconButton onClick={deleteJob} className={classes.button}>
                       <DeleteIcon />
-                    </button>
-                    <button
+                      {deleteLoading && (
+                        <CircularProgress
+                          size={30}
+                          className={classes.deleteProgress}
+                        />
+                      )}
+                    </IconButton>
+                    <IconButton
                       className={classes.button}
                       onClick={handlePanelExpand}
                     >
                       <ExpandMoreIcon />
-                    </button>
+                    </IconButton>
                   </Grid>
                   <Grid item sm={2} xs={12}>
                     <Typography variant="body1" color="primary">

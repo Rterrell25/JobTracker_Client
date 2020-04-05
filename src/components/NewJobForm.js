@@ -17,12 +17,8 @@ import useJobCardStyles from '../styles/JobCardStyles'
 
 const NewJobForm = React.forwardRef(
   ({ handleSubmit, formData, handleInputChange, isloading }, ref) => {
-    const isInvalid =
-      !formData.company ||
-      !formData.position ||
-      !formData.link ||
-      !formData.status ||
-      isloading
+    const { company, position, status, link } = formData
+    const isInvalid = !company || !position || !link || !status || isloading
 
     const classes = useJobCardStyles()
     return (
@@ -49,7 +45,7 @@ const NewJobForm = React.forwardRef(
                   label="Company"
                   name="company"
                   autoComplete="company"
-                  value={formData.company}
+                  value={company}
                   onChange={handleInputChange('company')}
                 />
               </Grid>
@@ -63,13 +59,13 @@ const NewJobForm = React.forwardRef(
                   label="Position"
                   name="position"
                   autoComplete="position"
-                  value={formData.position}
+                  value={position}
                   onChange={handleInputChange('position')}
                 />
               </Grid>
               <Grid item sm={2} xs={12} className={classes.grid}>
                 <SelectStatus
-                  status={formData.status}
+                  status={status}
                   handleInputChange={handleInputChange}
                 />
               </Grid>
@@ -83,6 +79,7 @@ const NewJobForm = React.forwardRef(
                   label="Link"
                   name="link"
                   autoComplete="link"
+                  value={link}
                   onChange={handleInputChange('link')}
                 />
               </Grid>
