@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     textAlign: 'center',
     width: '100%', // Fix IE 11 issue.
@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: '0.8rem',
     width: '100%',
     position: 'absolute'
+  },
+  links: {
+    color: theme.palette.text.primary
   }
 }))
 
@@ -65,21 +68,21 @@ const Login = ({ history }) => {
 
   const isInvalid = !formData.email || !formData.password || isloading
 
-  const handleInputChange = field => e =>
+  const handleInputChange = (field) => (e) =>
     setFormData({ ...formData, [field]: e.target.value })
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     setIsLoading(true)
     axios
       .post('/login', formData)
-      .then(res => {
+      .then((res) => {
         localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
         dispatch({ type: 'LOGIN' })
         setIsLoading(false)
         history.push('/dashboard')
       })
-      .catch(err => {
+      .catch((err) => {
         setErrors(err.response.data)
         console.log(err.response.data)
         setIsLoading(false)
@@ -150,7 +153,7 @@ const Login = ({ history }) => {
                 component={NavLink}
                 to="/signup"
                 variant="body2"
-                style={{ color: 'black' }}
+                className={classes.links}
               >
                 Don't have an account? Sign Up
               </Link>
@@ -159,7 +162,7 @@ const Login = ({ history }) => {
                 component={NavLink}
                 to="/reset"
                 variant="body2"
-                style={{ color: 'black' }}
+                className={classes.links}
               >
                 Forgot Password?
               </Link>

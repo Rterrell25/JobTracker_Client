@@ -18,7 +18,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 // Components
 import Program from '../components/Program'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     textAlign: 'center',
     width: '100%', // Fix IE 11 issue.
@@ -55,6 +55,9 @@ const useStyles = makeStyles(theme => ({
   },
   pageTitle: {
     marginBottom: 16
+  },
+  links: {
+    color: theme.palette.text.primary
   }
 }))
 
@@ -92,22 +95,22 @@ const SignUp = ({ history }) => {
     !formData.program ||
     isloading
 
-  const handleInputChange = field => e => {
+  const handleInputChange = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     setIsLoading(true)
     axios
       .post('/signup', formData)
-      .then(res => {
+      .then((res) => {
         localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
         dispatch({ type: 'LOGIN' })
         setIsLoading(false)
         history.push('/dashboard')
       })
-      .catch(err => {
+      .catch((err) => {
         setErrors(err.response.data)
         console.log(err.response.data)
         setIsLoading(false)
@@ -231,7 +234,7 @@ const SignUp = ({ history }) => {
               component={NavLink}
               to="/login"
               variant="body2"
-              style={{ color: 'black' }}
+              className={classes.links}
             >
               Already have an account? Login
             </Link>

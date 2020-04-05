@@ -16,10 +16,10 @@ const Navbar = ({ isAuth }) => {
   let history = useHistory()
   const { dispatch } = useContext(UserContext)
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundColor: 'white',
-      color: 'black'
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.text.primary
     }
   }))
   const classes = useStyles()

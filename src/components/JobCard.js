@@ -66,11 +66,11 @@ const JobCard = ({
 
   const isInvalidFollow = !followupData.type || !followupData.body || isloading
 
-  const handleInputChange = field => e => {
+  const handleInputChange = (field) => (e) => {
     setJobData({ ...jobData, [field]: e.target.value })
   }
 
-  const handleFollowChange = field => e => {
+  const handleFollowChange = (field) => (e) => {
     setFollowupData({ ...followupData, [field]: e.target.value })
   }
 
@@ -82,7 +82,7 @@ const JobCard = ({
     if (!follows) fetchFollow()
   }
 
-  const handleEditJob = async e => {
+  const handleEditJob = async (e) => {
     e.preventDefault()
 
     setIsLoading(true)
@@ -94,14 +94,14 @@ const JobCard = ({
         }
       })
 
-      .then(res => {
+      .then((res) => {
         setMessage(res.data)
         fetchUser()
         setIsLoading(false)
         setEdit(!edit)
         setOpen(true)
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
         setIsLoading(false)
       })
@@ -115,17 +115,17 @@ const JobCard = ({
           Authorization: `${fireToken}`
         }
       })
-      .then(res => {
+      .then((res) => {
         setMessage(res.data)
         setOpen(true)
         fetchUser()
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
       })
   }
 
-  const handleFollowSubmit = async e => {
+  const handleFollowSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)
     setIsFollowLoading(true)
@@ -137,7 +137,7 @@ const JobCard = ({
         }
       })
 
-      .then(res => {
+      .then((res) => {
         setMessage(res.data)
         setIsLoading(false)
         setIsFollowLoading(false)
@@ -145,7 +145,7 @@ const JobCard = ({
         fetchFollow()
         setFollowupData(INITIAL_STATE)
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
         setIsLoading(false)
       })
@@ -160,11 +160,11 @@ const JobCard = ({
           Authorization: `${token}`
         }
       })
-      .then(res => {
+      .then((res) => {
         setIsFollowLoading(false)
         setFollows(res.data.followup)
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
   }
 
   return (
@@ -218,9 +218,7 @@ const JobCard = ({
                   </Grid>
                   <Grid item sm={2} xs={12}>
                     <Typography variant="body2" className={classes.timeStamp}>
-                      {moment(createdAt)
-                        .startOf('minute')
-                        .fromNow()}
+                      {moment(createdAt).startOf('minute').fromNow()}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -293,9 +291,8 @@ const JobCard = ({
           >
             Follow Ups with {company}
           </Typography>
-
           {follows !== null && !isFollowloading && follows.length > 0 ? (
-            follows.map(item => (
+            follows.map((item) => (
               <Card
                 style={{ marginTop: 10, paddingTop: 5, paddingBottom: 5 }}
                 key={item.followUpId}
@@ -313,9 +310,7 @@ const JobCard = ({
                     </Grid>
                     <Grid item sm={3} xs={12} className={classes.grid}>
                       <Typography variant="body2" className={classes.timeStamp}>
-                        {moment(item.createdAt)
-                          .startOf('minute')
-                          .fromNow()}
+                        {moment(item.createdAt).startOf('minute').fromNow()}
                       </Typography>
                     </Grid>
                   </Grid>

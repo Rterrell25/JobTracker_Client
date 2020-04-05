@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   card: {
     display: 'flex',
     marginBottom: 10,
@@ -32,7 +32,8 @@ export default makeStyles(theme => ({
   },
   button: {
     border: '0',
-    background: 'transparent'
+    background: 'transparent',
+    color: theme.palette.text.primary
   },
   timeStamp: {
     display: 'flex',
@@ -103,5 +104,14 @@ export default makeStyles(theme => ({
   dashboardContainer: {
     marginTop: 70,
     padding: 10
+  },
+  fabButton: {
+    position: 'fixed',
+    right: 25,
+    bottom: 25,
+    zIndex: 5
+  },
+  fabAddIcon: {
+    color: theme.palette.background.paper
   }
 }))
