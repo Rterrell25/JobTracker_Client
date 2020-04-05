@@ -67,13 +67,13 @@ const Alumni = ({ match, history }) => {
           Authorization: `${token}`
         }
       })
-      .then((res) => {
+      .then(res => {
         setUser(res.data)
       })
-      .catch((err) => console.log(err))
+      .catch(err => console.log(err))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault()
     setIsLoading(true)
     const fireToken = await localStorage.FBIdToken
@@ -84,7 +84,7 @@ const Alumni = ({ match, history }) => {
         }
       })
 
-      .then((res) => {
+      .then(res => {
         setOpen(true)
         setMessage(res.data)
         fetchUser()
@@ -92,14 +92,14 @@ const Alumni = ({ match, history }) => {
         setIsModalOpen(false)
         setFormData(INITIAL_STATE)
       })
-      .catch((err) => {
+      .catch(err => {
         setErrors(err.response.data)
         console.log(err)
         setIsLoading(false)
       })
   }
 
-  const handleInputChange = (field) => (e) => {
+  const handleInputChange = field => e => {
     setFormData({ ...formData, [field]: e.target.value })
   }
 

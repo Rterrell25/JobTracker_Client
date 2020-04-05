@@ -29,7 +29,7 @@ import LightModeIcon from '@material-ui/icons/Brightness7'
 import { ProfileContext } from '../contexts/ProfileContext'
 import { ThemeContext } from '../contexts/ThemeContext'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   navList: {
     width: 280,
     flexGrow: 1,
@@ -61,7 +61,7 @@ const HeaderMobile = ({ isAuth, logout }) => {
   const { isDarkTheme, setIsDarkTheme } = useContext(ThemeContext)
   const [isOpen, setIsOpen] = useState(false)
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
-  const toggleDrawer = (event) => {
+  const toggleDrawer = event => {
     if (
       event &&
       event.type === 'keydown' &&
@@ -74,7 +74,7 @@ const HeaderMobile = ({ isAuth, logout }) => {
 
   const handleThemeChange = () => {
     localStorage.setItem('prefersDarkTheme', `${!isDarkTheme}`)
-    setIsDarkTheme((prevState) => !prevState)
+    setIsDarkTheme(prevState => !prevState)
   }
 
   return (
