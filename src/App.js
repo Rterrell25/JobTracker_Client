@@ -36,7 +36,7 @@ import { ThemeContext } from './contexts/ThemeContext'
 
 axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
 
-const fetchProfile = (token) => {
+const fetchProfile = token => {
   return axios.get(`/user`, {
     headers: {
       Authorization: `${token}`
@@ -53,7 +53,7 @@ const App = () => {
 
   // keeps userContext authorized if signed in
   useEffect(
-    (_) => {
+    _ => {
       const token = localStorage.FBIdToken
       if (token && token !== 'Bearer undefined') {
         const decodedToken = jwtDecode(token)
@@ -64,8 +64,8 @@ const App = () => {
           dispatch({ type: 'LOGIN' })
           if (state.isAuth) {
             fetchProfile(token)
-              .then((res) => setUser(res.data))
-              .catch((error) => console.error(error))
+              .then(res => setUser(res.data))
+              .catch(error => console.error(error))
           }
         }
       } else {
