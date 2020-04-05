@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
-export default makeStyles((theme) => ({
+export default makeStyles(theme => ({
   card: {
     display: 'flex',
     marginBottom: 10,
@@ -31,9 +31,11 @@ export default makeStyles((theme) => ({
     }
   },
   button: {
+    padding: '0 4px',
     border: '0',
     background: 'transparent',
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    position: 'relative'
   },
   timeStamp: {
     display: 'flex',
@@ -55,6 +57,15 @@ export default makeStyles((theme) => ({
   },
   progress: {
     position: 'absolute'
+  },
+  deleteProgress: {
+    // These values need to change with the size of the progress
+    // 0,0,0,0, if button size === progress size, else, adjust
+    position: 'absolute',
+    bottom: 0,
+    top: -2,
+    right: 10,
+    left: 1
   },
   alumniCard: {
     display: 'flex',
