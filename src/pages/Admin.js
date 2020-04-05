@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 // Pages
 import User from '../components/User'
@@ -16,7 +17,7 @@ import User from '../components/User'
 // Components
 import ProgramFilter from '../components/ProgramFilter'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     padding: 25,
     display: 'flex',
@@ -51,16 +52,16 @@ const Admin = () => {
   const [users, setUsers] = useState(null)
   const [formData, setFormData] = useState(INITIAL_STATE)
 
-  const handleInputChange = field => e =>
+  const handleInputChange = (field) => (e) =>
     setFormData({ ...formData, [field]: e.target.value })
 
   const getAllUers = () => {
     axios
       .get('/users')
-      .then(res => {
+      .then((res) => {
         setUsers(res.data)
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
   }
 
   useEffect(() => {
@@ -103,24 +104,26 @@ const Admin = () => {
         </Grid>
         <Grid item sm={8} xs={12}>
           {!users ? (
-            <h1>Loading...</h1>
+            <Grid item container justify="center">
+              <CircularProgress size={50} />
+            </Grid>
           ) : (
             users
-              .filter(user => {
+              .filter((user) => {
                 if (formData.search === '') return true
                 return (user.firstName + user.lastName)
                   .toLowerCase()
                   .includes(formData.search.toLowerCase())
               })
-              .filter(user => {
+              .filter((user) => {
                 if (formData.cohort === '') return true
                 return user.cohort.toString().includes(formData.cohort)
               })
-              .filter(user => {
+              .filter((user) => {
                 if (formData.program === 'All') return true
                 return user.program === formData.program
               })
-              .map(user => (
+              .map((user) => (
                 <User
                   key={user.userId}
                   id={user.userId}
