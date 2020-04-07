@@ -16,6 +16,7 @@ import darkTheme from './utils/darkTheme'
 import AuthRoute from './utils/AuthRoute'
 import UnAuthRoute from './utils/UnAuthRoute'
 import AdminRoute from './utils/AdminRoute'
+import ScrollToTop from './utils/ScrollToTop'
 
 // Components
 import NavBar from './components/NavBar'
@@ -82,6 +83,7 @@ const App = () => {
       <UserContext.Provider value={{ state, dispatch }}>
         <div className="App">
           <Router>
+            <ScrollToTop />
             <NavBar isAuth={state.isAuth} />
             <div className="container">
               <Switch>

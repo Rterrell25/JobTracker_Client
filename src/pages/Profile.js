@@ -223,7 +223,7 @@ const Profile = () => {
             <div className={classes.paper}>
               <img
                 src={user.user.imageUrl}
-                alt="wyncode logo"
+                alt="User Profile"
                 className={classes.logo}
               />
               {isloading && (
