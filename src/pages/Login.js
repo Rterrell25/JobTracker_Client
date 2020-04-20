@@ -149,7 +149,7 @@ const Login = ({ history }) => {
               control={
                 <Checkbox
                   name="remember"
-                  checked={remember && remember}
+                  checked={remember}
                   onClick={handleRemember}
                   inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
