@@ -5,12 +5,15 @@ import * as serviceWorker from './serviceWorker'
 
 import { ProfileProvider } from './contexts/ProfileContext'
 import { ThemeProvider } from './contexts/ThemeContext'
+import { RememberProvider } from './contexts/RememberContext'
 
 ReactDOM.render(
   <ProfileProvider>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <RememberProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </RememberProvider>
   </ProfileProvider>,
   document.getElementById('root')
 )
