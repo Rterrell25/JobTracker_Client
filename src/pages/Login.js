@@ -1,17 +1,20 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles'
 import UserContext from '../contexts/UserContext'
+import { RememberContext } from '../contexts/RememberContext'
 import Logo from '../components/SVGComponents/Logo'
 
 // MUI stuff
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Checkbox from '@material-ui/core/Checkbox'
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -52,17 +55,21 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const INITIAL_STATE = {
-  email: '',
-  password: ''
-}
-
 const Login = ({ history }) => {
+  const INITIAL_STATE = {
+    email: localStorage.Email ? localStorage.Email : '',
+    password: ''
+  }
   const classes = useStyles()
+
+  useEffect(() => {
+    localStorage.Email && localStorage.getItem('Email')
+  }, [])
 
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [isloading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState({})
+  const { remember, setRemember } = useContext(RememberContext)
 
   const { dispatch } = useContext(UserContext)
 
@@ -79,6 +86,10 @@ const Login = ({ history }) => {
       .then(res => {
         localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
         dispatch({ type: 'LOGIN' })
+        remember
+          ? localStorage.setItem('Email', `${formData.email}`)
+          : localStorage.removeItem('Email')
+
         setIsLoading(false)
         history.push('/dashboard')
       })
@@ -87,6 +98,11 @@ const Login = ({ history }) => {
         console.log(err.response.data)
         setIsLoading(false)
       })
+  }
+
+  const handleRemember = () => {
+    localStorage.setItem('Remember', `${!remember}`)
+    setRemember(prevState => !prevState)
   }
 
   return (
@@ -129,6 +145,18 @@ const Login = ({ history }) => {
               value={formData.password}
               onChange={handleInputChange('password')}
             />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="remember"
+                  checked={remember && remember}
+                  onClick={handleRemember}
+                  inputProps={{ 'aria-label': 'primary checkbox' }}
+                />
+              }
+              label="Remember Me"
+            />
+
             {errors.general && (
               <Typography variant="body2" className={classes.customError}>
                 {errors.general}

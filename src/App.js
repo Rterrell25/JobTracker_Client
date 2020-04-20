@@ -37,6 +37,19 @@ import { ThemeContext } from './contexts/ThemeContext'
 
 axios.defaults.baseURL = `https://us-central1-jobtracker-4f14f.cloudfunctions.net/api`
 
+const checkToken = () => {
+  const token = localStorage.FBIdToken
+  if (token && token !== 'Bearer undefined') {
+    const decodedToken = jwtDecode(token)
+    if (decodedToken.exp * 1000 < Date.now()) {
+      window.location.reload()
+    }
+  }
+  setTimeout(checkToken, 60 * 1000)
+}
+
+checkToken()
+
 const fetchProfile = token => {
   return axios.get(`/user`, {
     headers: {
